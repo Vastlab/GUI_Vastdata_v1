@@ -26,8 +26,8 @@ elif(sign =='L' or sign =='l'):
 else:
     print("Wrong Input for the OS Type")
     pass
-    
 
+index1 = int(input("Enter the index number: \n"))
 print("Clearning data in progress.... ")
 root = Tk()
 root.title('Dataset Image')
@@ -70,16 +70,25 @@ output_directory7 = (f"bad_detection_bb{new_sign}")
 output_directory8 = (f"one_bb_images_bb{new_sign}")
 
 #Create a CSV file for the Vast labe dataset that has good bounding boxes for the subject and object
-output_file = open("vastdata_v1.csv",'w')
-output_file.write(f'image_path,subject_name,subject_id,object_name,object_id,verb_name,verb_id,image_width,image_height,subject_ymin,subject_xmin,subject_ymax,subject_xmax,object_ymin,object_xmin,object_ymax,object_xmax\n')
+if not os.path.exists("vastdata_v1.csv"):
+    output_file = open("vastdata_v1.csv",'w')
+    output_file.write(f'image_path,subject_name,subject_id,object_name,object_id,verb_name,verb_id,image_width,image_height,subject_ymin,subject_xmin,subject_ymax,subject_xmax,object_ymin,object_xmin,object_ymax,object_xmax\n')
+else:
+    output_file = open("vastdata_v1.csv",'a')
 #Create a CSV file for the bad bounding boxes
-output_file1 = open("bad_bb_v1.csv",'w')
-output_file1.write(f'image_path,subject_name,subject_id,object_name,object_id,verb_name,verb_id,image_width,image_height,subject_ymin,subject_xmin,subject_ymax,subject_xmax,object_ymin,object_xmin,object_ymax,object_xmax\n')
+if not os.path.exists("bad_bb_v1.csv"):
+    output_file1 = open("bad_bb_v1.csv",'w')
+    output_file1.write(f'image_path,subject_name,subject_id,object_name,object_id,verb_name,verb_id,image_width,image_height,subject_ymin,subject_xmin,subject_ymax,subject_xmax,object_ymin,object_xmin,object_ymax,object_xmax\n')
+else:
+    output_file1 = open("bad_bb_v1.csv",'a')
 #Create a CSV file for the one boudning boxes images
-output_file2 = open("one_bb_v1.csv",'w')
-output_file2.write(f'image_path,subject_name,subject_id,object_name,object_id,verb_name,verb_id,image_width,image_height,subject_ymin,subject_xmin,subject_ymax,subject_xmax,object_ymin,object_xmin,object_ymax,object_xmax\n')
+if not os.path.exists("one_bb_v1.csv"):
+    output_file2 = open("one_bb_v1.csv",'w')
+    output_file2.write(f'image_path,subject_name,subject_id,object_name,object_id,verb_name,verb_id,image_width,image_height,subject_ymin,subject_xmin,subject_ymax,subject_xmax,object_ymin,object_xmin,object_ymax,object_xmax\n')
+else:
+    output_file2 = open("one_bb_v1.csv",'a')
+
 all_csv_files = glob.glob(new_csv_files_root_path+new_sign+"*.csv")
-index1=0
 #pdb.set_trace()
 #Go through all the CSV files that have the coordinates of the boudnign boxs
 for csv_file in all_csv_files:
@@ -229,5 +238,5 @@ for csv_file in all_csv_files:
         else:
             path_3 = output_directory3+filename+'.jpg'
             cv2.imwrite(path_3, org_img)
-
+print(f"The index number is: {index1}")
 output_file.close()
